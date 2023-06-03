@@ -6,62 +6,64 @@ export const knex = require('knex')({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DATABASE
-  }
+  },
+  debug: true
 });
 
-async function DB() {
-  await knex.schema.hasTable('users').then(async function (exists: unknown) {
+async function DataBaseInitialization() {
+  await knex.schema.hasTable('passengers').then(async function (exists: unknown) {
     if (!exists) {
       await knex.schema
-        .createTable('users', (table: { integer: (arg0: string) => number; increments: (arg0: string) => void; string: (arg0: string) => void; }) => {
+        .createTable('passengers', (table: { integer: (arg0: string) => number; increments: (arg0: string) => void; string: (arg0: string) => void; boolean: (arg0: string) => boolean; }) => {
           table.increments('id');
-          table.string('fullname')
-          table.string('username');
+          table.string('firstname');
+          table.string('lastname');
           table.string('email');
-          table.string('phonenumber')
+          table.string('phone');
+          table.string('home_address');
+          table.string('work_address');
+          table.boolean('verified');
           table.integer('wallet');
           table.string('password');
         })
-        .createTable('deposits', (table: { increments: (arg0: string) => void; string: (arg0: string) => void; integer: (arg0: string) => { (): any; new(): any; unsigned: { (): { (): any; new(): any; references: { (arg0: string): void; new(): any; }; }; new(): any; }; }; }) => {
+        .createTable('drivers', (table: { integer: (arg0: string) => number; increments: (arg0: string) => void; string: (arg0: string) => void; boolean: (arg0: string) => boolean; }) => {
           table.increments('id');
-          table.string('reference');
-          table.string('amount');
-          table.string('currency');
-          table.string('status');
-          table
-            .integer('user_id')
-            .unsigned()
-            .references('users.id');
+          table.string('firstname');
+          table.string('lastname');
+          table.string('email');
+          table.string('phone');
+          table.string('home_address');
+          table.boolean('verified');
+          table.integer('wallet');
+          table.string('password');
         })
-        .createTable('transfers', (table: { increments: (arg0: string) => void; string: (arg0: string) => void; integer: (arg0: string) => { (): any; new(): any; unsigned: { (): { (): any; new(): any; references: { (arg0: string): void; new(): any; }; }; new(): any; }; }; }) => {
+        .createTable('trips', (table: { increments: (arg0: string) => void; string: (arg0: string) => void; integer: (arg0: string) => { (): any; new(): any; unsigned: { (): { (): any; new(): any; references: { (arg0: string): void; new(): any; }; }; new(): any; }; }; json: (arg0: string) => void; }) => {
           table.increments('id');
-          table.string('reference');
-          table.string('amount');
-          table.string('recipient');
-          table.string('recipient_email');
-          table.string('recipient_phone');
-          table.string('status');
           table
-            .integer('user_id')
+            .integer('driver')
             .unsigned()
-            .references('users.id');
+            .references('drivers.id');
+          table
+            .integer('passenger')
+            .unsigned()
+            .references('passengers.id');
+          table.json('location');
+          table.json('destination');
+          table.json('fair');
+          table.integer('distance');
         })
-        .createTable('withdrawals', (table: { increments: (arg0: string) => void; string: (arg0: string) => void; integer: (arg0: string) => { (): any; new(): any; unsigned: { (): { (): any; new(): any; references: { (arg0: string): void; new(): any; }; }; new(): any; }; }; }) => {
+        .createTable('payments', (table: { increments: (arg0: string) => void; string: (arg0: string) => void; integer: (arg0: string) => { (): any; new(): any; unsigned: { (): { (): any; new(): any; references: { (arg0: string): void; new(): any; }; }; new(): any; }; }; enum: (arg0: string, arg1: string[]) => void; }) => {
           table.increments('id');
+          table.enum('type', ['wallet credit', 'wallet debit', 'withdrawal'])
+          table.integer('amount');
+          table.string('beneficiary');
+          table.enum('status', ['pending', 'success', 'failed']);
+          table.string('time');
+          table.string('date');
           table.string('reference');
-          table.string('code');
-          table.string('bank');
-          table.string('name');
-          table.string('account_number');
-          table.string('amount');
-          table.string('status');
-          table
-            .integer('user_id')
-            .unsigned()
-            .references('users.id');
         })
     }
   });
 }
 
-export default DB;
+export default DataBaseInitialization;

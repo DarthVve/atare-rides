@@ -5,6 +5,7 @@
   "scripts": {
     "start": "docker compose up -d && node ./bin/www",
     "dev": "docker compose up -d && nodemon ./bin/www",
+    "dev:test": "nodemon ./bin/www",
     "test": "jest",
     "tsc": "tsc -w",
     "build": "tsc",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/babel__core": "^7.20.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.13",
