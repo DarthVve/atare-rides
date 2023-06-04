@@ -73,6 +73,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
+.db.env
 .env
 .env.development.local
 .env.test.local
@@ -123,6 +124,7 @@ dist
 .vscode-test
 
 # yarn v2
+yarn-error.log
 .yarn/cache
 .yarn/unplugged
 .yarn/build-state.yml
