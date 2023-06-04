@@ -63,7 +63,7 @@ async function DataBaseInitialization() {
           table.string('reference');
         })
     }
-  });
-}
+  })
+};
 
 export default DataBaseInitialization;

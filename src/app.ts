@@ -7,6 +7,7 @@ import DataBaseInitialization from './database/knex';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import tripsRouter from './routes/trips';
+import paymentsRouter from './routes/payments';
 
 DataBaseInitialization().then(() => console.log('Database initialized successfully'));
 
@@ -21,5 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/trips', tripsRouter);
+app.use('/payments', paymentsRouter);
+
 
 export default app;
