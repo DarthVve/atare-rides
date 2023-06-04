@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from 'express';
-import { options, generateToken, userSchema, loginSchema } from '../utility/utils';
+import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { knex } from '../database/knex';
-import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+
+import { knex } from '../database/knex';
 import { Passenger } from '../models/models';
+import { options, generateToken, userSchema, loginSchema } from '../utility/utils';
 
 
 // Register a new user(passenger)
@@ -24,11 +24,11 @@ export async function register(req: Request, res: Response) {
 
     const passwordHash = await bcrypt.hash(req.body.password, 8);
     const passenger = await knex('passengers').insert({
-      id: uuidv4(),
+      // id: uuidv4(),
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
-      phonenumber: req.body.phone,
+      phone: req.body.phone,
       verified: false,
       wallet: 0,
       password: passwordHash,
@@ -54,7 +54,7 @@ export async function logIntoAccount(req: Request, res: Response) {
       return res.status(400).json({ msg: validationResult.error.details[0].message });
     }
 
-    const passenger = await knex('passengers').where('email', req.body.email).first();
+    const passenger = await knex('passengers').where('email', req.body.email).first() as Passenger;
 
     if (!passenger) { return res.status(404).json({ msg: 'User not found' }) };
 

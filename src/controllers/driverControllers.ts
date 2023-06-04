@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from 'express';
-import { options, generateToken, userSchema, loginSchema } from '../utility/utils';
+import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { knex } from '../database/knex';
-import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+
+import { knex } from '../database/knex';
 import { Driver } from '../models/models';
+import { options, generateToken, userSchema, loginSchema } from '../utility/utils';
 
 
 // Register a new user(driver))
@@ -24,11 +24,11 @@ export async function createAccount(req: Request, res: Response) {
 
     const passwordHash = await bcrypt.hash(req.body.password, 8);
     const driver = await knex('drivers').insert({
-      id: uuidv4(),
+      // id: uuidv4(),
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
-      phonenumber: req.body.phone,
+      phone: req.body.phone,
       verified: false,
       wallet: 0,
       password: passwordHash,
@@ -46,22 +46,22 @@ export async function createAccount(req: Request, res: Response) {
 };
 
 //Driver Log In
-export async function logIntoAccount(req: Request, res: Response) {
+export async function driverlogin(req: Request, res: Response) {
   try {
     const validationResult = loginSchema.validate(req.body, options);
     if (validationResult.error) {
       return res.status(400).json({ msg: validationResult.error.details[0].message });
     }
 
-    const driver = await knex('drivers').where('email', req.body.email).first();
+    const driver = await knex('drivers').where('email', req.body.email).first() as Driver;
 
     if (!driver) { return res.status(404).json({ msg: 'User not found' }) };
 
     const isMatch = await bcrypt.compare(req.body.password, driver.password);
     if (isMatch) {
       const id = driver.id;
-      const fullname = driver.fullname;
-      const username = driver.username;
+      const fullname = driver.firstname;
+      const username = driver.lastname;
       const email = driver.email;
       const phonenumber = driver.phone;
       const homeAddress = driver.home_address;

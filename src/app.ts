@@ -3,9 +3,10 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
+import DataBaseInitialization from './database/knex';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
-import DataBaseInitialization from './database/knex';
+import tripsRouter from './routes/trips';
 
 DataBaseInitialization().then(() => console.log('Database initialized successfully'));
 
@@ -19,5 +20,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/trips', tripsRouter);
 
 export default app;

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verify } from 'jsonwebtoken';
+
 import { knex } from '../database/knex';
 
 const secret = process.env.JWT_SECRET as string;

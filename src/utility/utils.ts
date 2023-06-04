@@ -1,7 +1,8 @@
 import Joi from 'joi';
 import jwt from 'jsonwebtoken';
 
-/* VALIDATION */
+
+/* VALIDATIONS */
 //Joi validation options
 export const options = {
   abortEarly: false,
@@ -11,7 +12,6 @@ export const options = {
     },
   },
 };
-
 
 //Passenger registration schema
 export const userSchema = Joi.object({
@@ -29,9 +29,32 @@ export const loginSchema = Joi.object().keys({
   password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required()
 });
 
+//Trip schema
+export const tripSchema = Joi.object({
+  driver: Joi.number().required(),
+  passenger: Joi.number().required(),
+  location: Joi.object().required(),
+  destination: Joi.object().required(),
+  fair: Joi.object().required()
+});
 
-//Token Generator function for login sessions
+//Deposit schema
+export const depositSchema = Joi.object().keys({
+  amount: Joi.number().required(),
+  email: Joi.string().trim().lowercase().required(),
+  code: Joi.string().required(),
+  account_number: Joi.string().required(),
+  phone_number: Joi.string().regex(/^[0-9]{11}/)
+});
+
+
+
+/* Token Generator function for login sessions */
 export const generateToken = (user: { [key: string]: unknown }, time: string = '7d'): unknown => {
   const pass = process.env.JWT_SECRET as string;
   return jwt.sign(user, pass, { expiresIn: time });
 };
+
+
+/* Money converter function */
+export const moneyConverter = (num: number): string => String(num * 100);

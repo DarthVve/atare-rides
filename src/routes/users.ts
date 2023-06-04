@@ -1,10 +1,19 @@
-import { NextFunction } from "express";
+import express from 'express';
 
-var express = require('express');
-var router = express.Router();
+import { register, logIntoAccount, logoutUser } from '../controllers/passengerControllers';
+import { createAccount, driverlogin } from '../controllers/driverControllers';
 
-/* GET users listing. */
-router.get('/', function (req: Request, res: Response, next: NextFunction) {
-});
+const router = express.Router();
+
+/* User Routes */
+router.get('/logout', logoutUser)
+
+/* Passenger Routes */
+router.post('/register', register);
+router.post('/login', logIntoAccount);
+
+/* Driver Routes */
+router.post('/create-account', createAccount);
+router.post('/driver/login', driverlogin);
 
 export default router;

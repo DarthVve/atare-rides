@@ -5,7 +5,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req: Request, res: Response, next: NextFunction) {
-  res.render('index', { title: 'Express' });
+  res.json({ app: 'Atare Rides API' });
 });
 
 export default router;
