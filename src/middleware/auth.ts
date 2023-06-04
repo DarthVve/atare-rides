@@ -19,8 +19,10 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
     }
 
     const { id } = verified as { [key: string]: string };
-    const user = await knex('users').where('id', id).first()
-    if (!user) {
+    const passenger = await knex('passengers').where('id', id).first()
+    const driver = await knex('drivers').where('id', id).first();
+
+    if (!passenger || !driver) {
       return res.status(401).json({ msg: "User could not be identified" });
     }
 

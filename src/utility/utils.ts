@@ -42,11 +42,21 @@ export const tripSchema = Joi.object({
 export const depositSchema = Joi.object().keys({
   amount: Joi.number().required(),
   email: Joi.string().trim().lowercase().required(),
-  code: Joi.string().required(),
-  account_number: Joi.string().required(),
-  phone_number: Joi.string().regex(/^[0-9]{11}/)
+  bank: Joi.object().keys({
+    code: Joi.string().required(),
+    account_number: Joi.string().required()
+  }).required()
 });
 
+//Withdrawal schema
+export const withdrawalSchema = Joi.object().keys({
+  // amount: Joi.number().required(),
+  // email: Joi.string().trim().lowercase().required(),
+  // bank: Joi.object().keys({
+  //   code: Joi.string().required(),
+  //   account_number: Joi.string().required()
+  // }).required()
+});
 
 
 /* Token Generator function for login sessions */
@@ -54,7 +64,3 @@ export const generateToken = (user: { [key: string]: unknown }, time: string = '
   const pass = process.env.JWT_SECRET as string;
   return jwt.sign(user, pass, { expiresIn: time });
 };
-
-
-/* Money converter function */
-export const moneyConverter = (num: number): string => String(num * 100);

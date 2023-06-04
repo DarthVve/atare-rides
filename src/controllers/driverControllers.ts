@@ -63,10 +63,10 @@ export async function driverlogin(req: Request, res: Response) {
       const fullname = driver.firstname;
       const username = driver.lastname;
       const email = driver.email;
-      const phonenumber = driver.phone;
+      const phone = driver.phone;
       const homeAddress = driver.home_address;
       const wallet = driver.wallet;
-      const userInfo = { id, fullname, username, email, phonenumber, wallet };
+      const userInfo = { id, fullname, username, email, phone, homeAddress, wallet };
       const token = generateToken({ id }) as string;
       const production = process.env.NODE_ENV === "production";
 
