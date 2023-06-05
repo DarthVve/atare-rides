@@ -7,7 +7,7 @@ import { fundAccount, withdraw } from '../controllers/paymentControllers';
 const router = express.Router();
 
 /* Fund Routes */
-router.post('/deposit', auth, fundAccount);
-router.post('/withdraw', auth, createRecipient, withdraw);
+router.post('/deposit', fundAccount);
+router.post('/withdraw', createRecipient, withdraw);
 
 export default router;

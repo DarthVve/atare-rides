@@ -3,13 +3,14 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-import DataBaseInitialization from './database/knex';
+import DataBaseInitialization, { databaseCleanUp } from './database/knex';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import tripsRouter from './routes/trips';
 import paymentsRouter from './routes/payments';
 
 DataBaseInitialization().then(() => console.log('Database initialized successfully'));
+// databaseCleanUp().then(() => console.log('Database cleaned up successfully'));
 
 const app = express();
 

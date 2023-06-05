@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { v4 as uuidv4 } from 'uuid';
+
 
 import { knex } from '../database/knex';
 import { Passenger } from '../models/models';
@@ -24,7 +24,6 @@ export async function register(req: Request, res: Response) {
 
     const passwordHash = await bcrypt.hash(req.body.password, 8);
     const passenger = await knex('passengers').insert({
-      id: uuidv4(),
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,

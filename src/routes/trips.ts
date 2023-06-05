@@ -9,6 +9,6 @@ const router = express.Router();
 router.post('/create', createTrip);
 router.get('/', getAllTrips);
 router.get('/:id', getTrip);
-router.put('/update/:id', auth, updateTrip);
+router.put('/update/:id', updateTrip);
 
 export default router;

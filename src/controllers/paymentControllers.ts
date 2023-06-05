@@ -34,7 +34,6 @@ export async function fundAccount(req: Request, res: Response) {
       return res.status(400).json({ message: 'failed to initiate transaction due to failure from third party api(paystack)', data: funding.data });
     } else {
       const payment = await knex('payments').insert({
-        id: uuidv4(),
         type: 'wallet credit',
         amount: amount,
         beneficiary: req.user,
