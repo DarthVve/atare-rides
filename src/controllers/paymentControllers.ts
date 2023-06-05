@@ -2,11 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-
 import { knex } from '../database/knex';
 import { options, depositSchema, withdrawalSchema } from '../utility/utils';
-import { getBanks, moneyConverter } from '../utility/paystack';
-import { Passenger, Driver } from "../models/models";
 
 
 // Deposit money into user's(passenger) wallet
