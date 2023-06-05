@@ -1,6 +1,7 @@
-# atare-rides
+# Atare Rides
 
- A functional rest API for a ride-sharing app using node js (typescript) and express js. The API fetchs data from a functional MySQl database.
+ A functional rest API for a ride-sharing app using node js (typescript) and express js. The API fetchs data from a functional MySQl database. There is also an instance of this application
+ on the mongo branch, which utilizes MongoDB instead of MySQL.
 
 ## Documentation
 
@@ -68,6 +69,10 @@ To run this project, you will need to add a .db.env file and an .env file.
 
 `PAYSTACK_SECRET_KEY` the same as your secret api key gotten from your paystack dashboard.
 
+## .env file with mongo
+
+You will no longer need the .db.env file. In the .env file all you need are the `JWT_SECRET`, `ROOT_URL`, `PAYSTACK_SECRET_KEY`, and add `MONGODB_URI` which is the connection string for your MongoDB data base.
+
 ## Run Locally
 
 To run this project you must have docker desktop installed and running  on your local machine.
@@ -127,7 +132,7 @@ Check the documentation to get an overview and details of it's use cases.
 
 <https://atare-rides.fly.dev>
 
-NB: The above link may not function properly during deployment due to some technical difficulties, docker needs to be installed in the container orchestration.
+NB: The above link may not function properly during deployment due to some technical difficulties, docker needs to be installed in the container orchestration. It is been worked on.
 
 ## Authors
 
