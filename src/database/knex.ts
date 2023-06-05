@@ -14,8 +14,8 @@ async function DataBaseInitialization() {
   await knex.schema.hasTable('passengers').then(async function (exists: unknown) {
     if (!exists) {
       await knex.schema
-        .createTable('passengers', (table: { integer: (arg0: string) => number; increments: (arg0: string) => void; string: (arg0: string) => void; boolean: (arg0: string) => boolean; }) => {
-          table.increments('id');
+        .createTable('passengers', (table: { integer: (arg0: string) => number; string: (arg0: string) => void; boolean: (arg0: string) => boolean; }) => {
+          table.string('id');
           table.string('firstname');
           table.string('lastname');
           table.string('email');
@@ -26,8 +26,8 @@ async function DataBaseInitialization() {
           table.integer('wallet');
           table.string('password');
         })
-        .createTable('drivers', (table: { integer: (arg0: string) => number; increments: (arg0: string) => void; string: (arg0: string) => void; boolean: (arg0: string) => boolean; }) => {
-          table.increments('id');
+        .createTable('drivers', (table: { integer: (arg0: string) => number; string: (arg0: string) => void; boolean: (arg0: string) => boolean; }) => {
+          table.string('id');
           table.string('firstname');
           table.string('lastname');
           table.string('email');
@@ -52,8 +52,8 @@ async function DataBaseInitialization() {
           table.json('fair');
           table.integer('distance');
         })
-        .createTable('payments', (table: { increments: (arg0: string) => void; string: (arg0: string) => void; integer: (arg0: string) => { (): any; new(): any; unsigned: { (): { (): any; new(): any; references: { (arg0: string): void; new(): any; }; }; new(): any; }; }; enum: (arg0: string, arg1: string[]) => void; }) => {
-          table.increments('id');
+        .createTable('payments', (table: { string: (arg0: string) => void; integer: (arg0: string) => { (): any; new(): any; unsigned: { (): { (): any; new(): any; references: { (arg0: string): void; new(): any; }; }; new(): any; }; }; enum: (arg0: string, arg1: string[]) => void; }) => {
+          table.string('id');
           table.enum('type', ['wallet credit', 'wallet debit', 'withdrawal'])
           table.integer('amount');
           table.string('beneficiary');
@@ -67,3 +67,12 @@ async function DataBaseInitialization() {
 };
 
 export default DataBaseInitialization;
+
+
+//Clean up database, clear all tables.
+export const databaseCleanUp = async () => {
+  await knex.schema.dropTable('trips');
+  await knex.schema.dropTable('payments');
+  await knex.schema.dropTable('drivers');
+  await knex.schema.dropTable('passengers');
+};

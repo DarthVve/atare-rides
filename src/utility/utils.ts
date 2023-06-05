@@ -50,12 +50,11 @@ export const depositSchema = Joi.object().keys({
 
 //Withdrawal schema
 export const withdrawalSchema = Joi.object().keys({
-  // amount: Joi.number().required(),
-  // email: Joi.string().trim().lowercase().required(),
-  // bank: Joi.object().keys({
-  //   code: Joi.string().required(),
-  //   account_number: Joi.string().required()
-  // }).required()
+  name: Joi.string().required(),
+  amount: Joi.string().required(),
+  bank_code: Joi.string().required(),
+  account_number: Joi.string().required(),
+  currency: Joi.string().required(),
 });
 
 

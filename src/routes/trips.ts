@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { createTrip, getAllTrips, getTrip, updateTrip } from '../controllers/tripControllers';
-import { auth } from '../middleware/auth';
+import { auth } from '../middlewares/auth';
 
 const router = express.Router();
 

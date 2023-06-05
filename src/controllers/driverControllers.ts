@@ -24,7 +24,7 @@ export async function createAccount(req: Request, res: Response) {
 
     const passwordHash = await bcrypt.hash(req.body.password, 8);
     const driver = await knex('drivers').insert({
-      // id: uuidv4(),
+      id: uuidv4(),
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
